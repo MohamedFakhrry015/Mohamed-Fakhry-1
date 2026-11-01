@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الشيخ محمد فخري | البورتفوليو الأكاديمي والتعليمي</title>
+    <title>الشيخ محمد فخري | المنصة الأكاديمية والتعليمية</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #06141b;
@@ -36,541 +36,277 @@
             --border-color: rgba(0, 0, 0, 0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); scroll-behavior: smooth; }
+        body { background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.8; transition: var(--transition); overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.8;
-            transition: var(--transition);
-            overflow-x: hidden;
-        }
+        .glass { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-color); }
 
-        .glass {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color);
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 1.2rem 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--accent-gold);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1.1rem 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.25rem; font-weight: 800; color: var(--accent-gold); display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: var(--transition); }
         .nav-links a:hover { color: var(--accent-gold); }
 
-        .controls { display: flex; gap: 0.8rem; }
+        .controls { display: flex; gap: 0.5rem; align-items: center; }
+        .btn-ctrl { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.35rem 0.75rem; border-radius: 50px; cursor: pointer; font-weight: 700; font-size: 0.82rem; transition: var(--transition); }
+        .btn-ctrl:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
-        .btn-ctrl {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.45rem 0.9rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: var(--transition);
-        }
+        header { padding: 9rem 5% 4rem; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .quran-ayah { font-family: var(--font-quran); font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 1rem; line-height: 2; }
+        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero-desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 850px; margin: 0 auto 2rem; }
 
-        .btn-ctrl:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
+        .btn { padding: 0.75rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer; transition: var(--transition); }
+        .btn-gold { background: linear-gradient(135deg, var(--accent-gold), #b45309); color: #fff; box-shadow: 0 4px 15px var(--accent-gold-glow); }
+        .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
 
-        header {
-            min-height: 90vh;
-            padding: 10rem 6% 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
+        section { padding: 4rem 5%; max-width: 1100px; margin: 0 auto; }
+        .sec-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.4rem; text-align: center; }
+        .sec-sub { text-align: center; color: var(--text-secondary); margin-bottom: 2.5rem; font-size: 0.95rem; }
 
-        .hero-content { max-width: 850px; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.8rem; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+        .card:hover { border-color: var(--accent-gold); transform: translateY(-3px); background: var(--bg-card-hover); }
+        
+        .article-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+        .location-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--accent-teal); margin-top: 0.5rem; font-weight: 600; text-decoration: none; }
 
-        .quran-ayah {
-            font-family: var(--font-quran);
-            font-size: 1.6rem;
-            color: var(--accent-gold);
-            margin-bottom: 1.5rem;
-            line-height: 2;
-        }
+        /* Modals */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-content { width: 100%; max-width: 500px; border-radius: 16px; padding: 2rem; position: relative; }
+        .close-modal { position: absolute; top: 1rem; left: 1.2rem; font-size: 1.4rem; cursor: pointer; color: var(--text-secondary); }
 
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1.2rem;
-        }
+        .form-group { margin-bottom: 1rem; text-align: right; }
+        [dir="ltr"] .form-group { text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.3rem; font-weight: 700; font-size: 0.88rem; }
+        .form-control { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(0, 0, 0, 0.3); color: var(--text-primary); outline: none; font-size: 0.9rem; }
 
-        .hero-desc {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1.2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.85rem 1.8rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-gold {
-            background: linear-gradient(135deg, var(--accent-gold), #b45309);
-            color: #ffffff;
-            box-shadow: 0 4px 20px var(--accent-gold-glow);
-        }
-
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 28px var(--accent-gold-glow);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover { background: var(--border-color); }
-
-        section {
-            padding: 6rem 6%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .sec-header { margin-bottom: 3.5rem; text-align: center; }
-
-        .sec-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 0.6rem;
-        }
-
-        .sec-sub {
-            color: var(--text-secondary);
-            max-width: 650px;
-            margin: 0 auto;
-            font-size: 1rem;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.8rem;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            border-radius: 16px;
-            padding: 2.2rem;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-gold);
-            background: var(--bg-card-hover);
-        }
-
-        .card-icon {
-            font-size: 2.2rem;
-            color: var(--accent-gold);
-            margin-bottom: 1.2rem;
-        }
-
-        .card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .card .subtitle { font-size: 0.88rem; color: var(--accent-teal); font-weight: 700; margin-bottom: 1rem; }
-        .card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
-
-        .card-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-gold);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        .card-link:hover { text-decoration: underline; }
-
-        .tag-group {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .tag {
-            font-size: 0.78rem;
-            padding: 0.3rem 0.7rem;
-            border-radius: 6px;
-            background: var(--border-color);
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .contact-box {
-            border-radius: 24px;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            margin-top: 2.5rem;
-        }
-
-        .soc-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .soc-icon:hover {
-            background: var(--accent-gold);
-            color: #ffffff;
-            border-color: var(--accent-gold);
-            transform: translateY(-3px);
-        }
-
-        footer {
-            padding: 2rem 6%;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.1rem; }
-            .nav-links { display: none; }
-            section { padding: 4rem 6%; }
-        }
+        footer { text-align: center; padding: 2rem 5%; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 3rem; }
+        @media (max-width: 768px) { h1 { font-size: 1.9rem; } .nav-links { display: none; } }
     </style>
 </head>
 <body>
 
     <nav class="glass">
-        <a href="#" class="logo">
-            <i class="fa-solid fa-book-open"></i> MOHAMED FAKHRY
-        </a>
+        <a href="#" class="logo"><i class="fa-solid fa-book-open"></i> MOHAMED FAKHRY</a>
         <ul class="nav-links">
-            <li><a href="#edu">الشهادات والدراسة</a></li>
-            <li><a href="#exp">الخبرة والخطابة</a></li>
-            <li><a href="#pas">الاهتمامات والشغف</a></li>
-            <li><a href="#srv">الخدمات والتعليم</a></li>
-            <li><a href="#cnt">التواصل</a></li>
+            <li><a href="#edu" data-key="nav-edu">الشهادات والدراسة</a></li>
+            <li><a href="#exp" data-key="nav-exp">الخبرة والخطابة</a></li>
+            <li><a href="#articles" data-key="nav-art">المكتبة والمقالات</a></li>
+            <li><a href="#cnt" data-key="nav-cnt">التواصل</a></li>
         </ul>
         <div class="controls">
-            <button class="btn-ctrl" id="langBtn">EN</button>
+            <button class="btn-ctrl" onclick="setLanguage('ar')">AR</button>
+            <button class="btn-ctrl" onclick="setLanguage('en')">EN</button>
+            <button class="btn-ctrl" onclick="setLanguage('id')">ID</button>
+            <button class="btn-ctrl" id="adminLoginBtn" onclick="openAdminModal()"><i class="fa-solid fa-user-lock"></i></button>
             <button class="btn-ctrl" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
         </div>
     </nav>
 
     <header>
-        <div class="hero-content">
-            <div class="quran-ayah">﴿ يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ ﴾</div>
-            <h1 class="hero-title">الشيخ محمد فخري محمد عبد الرحمن</h1>
-            <p class="hero-desc">
-                طالب بكلية الدراسات الإسلامية والعربية بجامعة الأزهر الشريف، ومعلم قرآن كريم وأحكام تجويد معتمد، وخطيب متطوع بوزارة الأوقاف المصرية، ومشارك بالتبادل الثقافي الدولي ببرنامج Darmasiswa في إندونيسيا.
-            </p>
-            <div class="cta-group">
-                <a href="https://wa.me/201554859287" target="_blank" class="btn btn-gold">
-                    <i class="fa-brands fa-whatsapp"></i> طلب دراسة / حجز حصة قرآن
-                </a>
-                <a href="mailto:mohamedfakhry0155@gmail.com" class="btn btn-outline">
-                    <i class="fa-solid fa-envelope"></i> إرسال رسالة مباشرة
-                </a>
-            </div>
+        <div class="quran-ayah">﴿ يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ ﴾</div>
+        <h1 data-key="hero-title">الشيخ محمد فخري محمد عبد الرحمن</h1>
+        <p class="hero-desc" data-key="hero-desc">
+            طالب بكلية الدراسات الإسلامية والعربية بجامعة الأزهر الشريف، ومعلم قرآن كريم وأحكام تجويد أونلاين بـ (أكاديمية مكنون - الرياض)، وخطيب متطوع بوزارة الأوقاف المصرية، ومشارك ببرنامج Darmasiswa للتبادل الثقافي بإندونيسيا.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="https://wa.me/201554859287" target="_blank" class="btn btn-gold" data-key="btn-wa"><i class="fa-brands fa-whatsapp"></i> حجز حصة / تواصل</a>
+            <a href="mailto:mohamedfakhry0155@gmail.com" class="btn btn-outline" data-key="btn-email"><i class="fa-solid fa-envelope"></i> البريد الإلكتروني</a>
         </div>
     </header>
 
     <section id="edu">
-        <div class="sec-header">
-            <h2 class="sec-title">المسار الأكاديمي والشهادات المعتمدة</h2>
-            <p class="sec-sub">التأصيل الشرعي والأكاديمي والشهادات والبرامج الثقافية المعتمدة.</p>
-        </div>
-
-        <div class="grid-3">
-            <div class="card glass">
+        <h2 class="sec-title" data-key="title-edu">المسار الأكاديمي والشهادات</h2>
+        <p class="sec-sub" data-key="sub-edu">الخلفية المعتمدة في علوم الشريعة واللغات والمهارات الفنية</p>
+        <div class="grid-cards">
+            <div class="card">
                 <div>
-                    <i class="fa-solid fa-mosque card-icon"></i>
-                    <h3>جامعة الأزهر الشريف</h3>
-                    <div class="subtitle">كلية الدراسات الإسلامية والعربية</div>
-                    <p>دراسة تعمقية متخصصة في أصول الدين، الفقه، البلاغة، والعلوم الإنسانية واللغوية على أيدي علماء الأزهر.</p>
-                </div>
-                <div class="tag-group">
-                    <span class="tag">دراسات إسلامية</span>
-                    <span class="tag">لغة عربية</span>
+                    <h3 data-key="edu-azhar-t">جامعة الأزهر الشريف</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-azhar-o">كلية الدراسات الإسلامية والعربية</span>
+                    <p style="margin-top:0.8rem;" data-key="edu-azhar-d">دراسة أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.</p>
                 </div>
             </div>
-
-            <div class="card glass">
+            <div class="card">
                 <div>
-                    <i class="fa-solid fa-quran card-icon"></i>
-                    <h3>دبلوم تأهيل معلم القرآن الكريم</h3>
-                    <div class="subtitle">اعتماد طرق التدريس والتجويد</div>
-                    <p>دبلوم متخصص يركز على أساليب وتأهيل معلمي القرآن الكريم، ودراسة أحكام التلاوة والتجويد والضبط العلمي.</p>
-                </div>
-                <div class="tag-group">
-                    <span class="tag">تأهيل معلمين</span>
-                    <span class="tag">تجويد القرآن</span>
+                    <h3 data-key="edu-ikmi-t">STMIK IKMI Cirebon</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;">Program Darmasiswa (Indonesia)</span>
+                    <p style="margin-top:0.8rem;" data-key="edu-ikmi-d">المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمدينة سيريبون.</p>
                 </div>
             </div>
-
-            <div class="card glass">
+            <div class="card">
                 <div>
-                    <i class="fa-solid fa-globe card-icon"></i>
-                    <h3>STMIK IKMI Cirebon (إندونيسيا)</h3>
-                    <div class="subtitle">برنامج Darmasiswa الدولي</div>
-                    <p>المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمعهد IKMI بمدينة سيريبون، إندونيسيا.</p>
-                </div>
-                <a href="https://ikmi.ac.id/stmik-ikmi-cirebon-kembali-dipercaya-kemdiktisaintek-selenggarakan-program-darmasiswa-internasional/" target="_blank" class="card-link">
-                    رابط الاعتماد الرسمي للمعهد <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-            </div>
-
-            <div class="card glass">
-                <div>
-                    <i class="fa-solid fa-language card-icon"></i>
-                    <h3>المركز الثقافي الإندونيسي (بوسكين)</h3>
-                    <div class="subtitle">Pusat Kebudayaan Indonesia بالقاهرة</div>
-                    <p>دراسة اللغة الإندونيسية (Bahasa Indonesia) والتعمق في ثقافة شرق آسيا والتبادل الثقافي الدولي.</p>
-                </div>
-                <div class="tag-group">
-                    <span class="tag">Bahasa Indonesia</span>
-                    <span class="tag">دبلوماسية ثقافية</span>
-                </div>
-            </div>
-
-            <div class="card glass">
-                <div>
-                    <i class="fa-solid fa-graduation-cap card-icon"></i>
-                    <h3>التأسيس التربوي والتعليم الابتدائي</h3>
-                    <div class="subtitle">تخطيط وتدريس مناهج الأساسي</div>
-                    <p>خبرة متخصصة في وضع وتنسيق الجداول الدراسية وتدريس المناهج الأساسية لطلاب المرحلة الابتدائية بأسلوب تربوي ميسر.</p>
-                </div>
-                <div class="tag-group">
-                    <span class="tag">تأسيس ابتدائي</span>
-                    <span class="tag">تنسيق جداول</span>
+                    <h3 data-key="edu-elec-t">دبلوم التركيبات والمعدات الكهربائية</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-elec-o">التعليم الفني الصناعي</span>
+                    <p style="margin-top:0.8rem;" data-key="edu-elec-d">خلفية عملية وتطبيقية في تأسيس الشبكات والتوصيلات الكهربائية وقراءة المخططات.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="exp">
-        <div class="sec-header">
-            <h2 class="sec-title">الخبرة العملية والإلقاء الخطابي</h2>
-            <p class="sec-sub">الخطابة الميدانية والتعليم القرآني أونلاين عبر الأكاديميات الدولية.</p>
-        </div>
-
-        <div class="grid-2">
-            <div class="card glass">
+    <section id="articles">
+        <h2 class="sec-title" data-key="title-art">المكتبة والمقالات المدعومة بالوسائط</h2>
+        <p class="sec-sub" data-key="sub-art">مقالات مدعمة بالصور ومواقع الفعاليات والخطب</p>
+        
+        <div class="grid-cards" id="articlesGrid">
+            <!-- Example Article with Image & Location -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1542816417-0983cbe82752?auto=format&fit=crop&w=600&q=80" alt="Sermon" class="article-img">
                 <div>
-                    <i class="fa-solid fa-microphone-lines card-icon"></i>
-                    <h3>خطيب متطوع | وزارة الأوقاف المصرية</h3>
-                    <div class="subtitle">الخطابة والإلقاء بالمنبر والمساجد</div>
-                    <p>إلقاء خطب الجمعة وإعداد الدروس الإيمانية والتربوية بمساجد الأوقاف بأسلوب أصيل يجمع بين الفصاحة والتأثير البناء.</p>
+                    <h3>خطبة الجمعة من مسجد الأوقاف</h3>
+                    <p>تفاصيل الخطبة والدروس التربوية القيمة التي أُلقيت في الجمعة الماضية.</p>
+                    <a href="https://maps.google.com" target="_blank" class="location-badge">
+                        <i class="fa-solid fa-location-dot"></i> موقع المسجد: الجيزة، مصر
+                    </a>
                 </div>
-                <a href="https://www.instagram.com/p/Ddp8TduCS_h/" target="_blank" class="card-link">
-                    مشاهدة نموذج للخطبة على إنستغرام <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
             </div>
 
-            <div class="card glass">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1584282675204-c1870a4427e1?auto=format&fit=crop&w=600&q=80" alt="Indonesia" class="article-img">
                 <div>
-                    <i class="fa-solid fa-laptop-code card-icon"></i>
-                    <h3>معلم قرآن كريم أونلاين | أكاديمية مكنون</h3>
-                    <div class="subtitle">الرياض - المملكة العربية السعودية</div>
-                    <p>تدريس التلاوة والتجويد والحفظ الافتراضي لطلاب الأكاديمية بالمملكة العربية السعودية وبقية دول الخليج.</p>
-                </div>
-                <div class="tag-group">
-                    <span class="tag">تعليم عن بُعد</span>
-                    <span class="tag">أكاديمية مكنون</span>
+                    <h3>التبادل الثقافي في سيريبون</h3>
+                    <p>مشاركة في فعاليات التبادل الثقافي والتعليمي بمعهد STMIK IKMI Cirebon.</p>
+                    <a href="https://maps.google.com" target="_blank" class="location-badge">
+                        <i class="fa-solid fa-location-dot"></i> STMIK IKMI Cirebon, Indonesia
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="pas">
-        <div class="sec-header">
-            <h2 class="sec-title">الشغف والعلوم المقربة</h2>
-            <p class="sec-sub">الروافد الثقافية والفكرية التي تثري الشخصية والخطاب التربوي.</p>
-        </div>
-
-        <div class="grid-3">
-            <div class="card glass">
-                <i class="fa-solid fa-book-quran card-icon"></i>
-                <h3>الأدب العربي والمعاجم</h3>
-                <p>التعمق في قراءة واستيعاب التراث الأدبي والمعجمي العربي، ودراسات البلاغة والبيان.</p>
-            </div>
-
-            <div class="card glass">
-                <i class="fa-solid fa-brain card-icon"></i>
-                <h3>العلوم النفسية والفلسفية</h3>
-                <p>متابعة الدراسات النفسية والإنسانية لتطوير أدوات الفهم التربوي والتعامل السليم مع مختلف المراحل العمرية.</p>
-            </div>
-
-            <div class="card glass">
-                <i class="fa-solid fa-earth-americas card-icon"></i>
-                <h3>اللغات والتواصل الحضاري</h3>
-                <p>اهتمام واسع باللغات الآسيوية وحوار الحضارات ونشر الثقافة الإسلامية والعربية إقليمياً ودولياً.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="srv">
-        <div class="sec-header">
-            <h2 class="sec-title">الخدمات والبرامج التعليمية</h2>
-            <p class="sec-sub">ما أقدمه للطلاب والأكاديميات والمؤسسات التعليمية.</p>
-        </div>
-
-        <div class="grid-2">
-            <div class="card glass">
-                <div>
-                    <i class="fa-solid fa-hand-holding-heart card-icon"></i>
-                    <h3>تعليم القرآن الكريم والتجويد</h3>
-                    <p>
-                        • جلسات إقراء أونلاين وتصحيح التلاوة<br>
-                        • تدريس أحكام التجويد والتطبيق المباشر<br>
-                        • برامج الحفظ والتثبيت للطلاب والأطفال<br>
-                        • إعداد وتنظيم الخطب والمحاضرات الدينية
-                    </p>
+    <!-- Admin Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content glass">
+            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
+            <h3 style="margin-bottom: 1rem; color: var(--accent-gold);">تسجيل دخول الأدمن</h3>
+            <form onsubmit="handleAdminAuth(event)">
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" class="form-control" id="adminPassword" required placeholder="أدخل كلمة المرور">
                 </div>
-            </div>
-
-            <div class="card glass">
-                <div>
-                    <i class="fa-solid fa-book-reader card-icon"></i>
-                    <h3>التأسيس اللغوي والتربوي</h3>
-                    <p>
-                        • تدريس مبادئ اللغة العربية والنحو الميسر<br>
-                        • التأسيس والمتابعة الدراسية للمرحلة الابتدائية<br>
-                        • استشارات وتوجيه للراغبين في الدراسة الأزهرية<br>
-                        • محاضر في التبادل الثقافي العربي-الإندونيسي
-                    </p>
+                <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;">دخول لوحة التحكم</button>
+            </form>
+            <div id="adminControls" style="display:none; margin-top: 1.5rem;">
+                <hr style="border-color: var(--border-color); margin-bottom: 1rem;">
+                <h4 style="color: var(--accent-teal); margin-bottom: 0.8rem;">إضافة مقال جديد (مع صورة ولوكيشن)</h4>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="artTitle" placeholder="عنوان المقال">
                 </div>
+                <div class="form-group">
+                    <input type="url" class="form-control" id="artImg" placeholder="رابط الصورة (Image URL)">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="artLoc" placeholder="اسم الموقع / رابط اللوكيشن">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="artDesc" rows="3" placeholder="محتوى/ملخص المقال"></textarea>
+                </div>
+                <button type="button" class="btn btn-gold" onclick="addNewArticle()" style="width:100%; justify-content:center;">نشر المقال فوراً</button>
             </div>
         </div>
-    </section>
-
-    <section id="cnt">
-        <div class="contact-box glass">
-            <h2 style="font-size: 2rem; margin-bottom: 0.8rem;">التواصل والحجز المباشر</h2>
-            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem;">
-                أهلاً بكم للتواصل والتنسيق لحصص تحفيظ القرآن الكريم، المتابعة التعليمية، أو الاستشارات الأكاديمية.
-            </p>
-            <div class="cta-group">
-                <a href="https://wa.me/201554859287" target="_blank" class="btn btn-gold">
-                    <i class="fa-brands fa-whatsapp"></i> +201554859287
-                </a>
-                <a href="mailto:mohamedfakhry0155@gmail.com" class="btn btn-outline">
-                    <i class="fa-solid fa-envelope"></i> mohamedfakhry0155@gmail.com
-                </a>
-            </div>
-
-            <div class="socials">
-                <a href="mailto:mohamedfakhry0155@gmail.com" class="soc-icon" title="Email"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://www.linkedin.com/public-profile/settings/?trk=d_flagship3_profile_self_view_public_profile&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3B%2F5K0jClBTteahTVD5buHrQ%3D%3D" target="_blank" class="soc-icon" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://wa.me/201554859287" target="_blank" class="soc-icon" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <footer>
         <p>&copy; MOHAMED FAKHRY MOHAMED MOHAMED ABDELRAHMAN. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
-        const themeBtn = document.getElementById('themeBtn');
-        themeBtn.addEventListener('click', () => {
+        const dict = {
+            ar: {
+                'nav-edu': 'الشهادات والدراسة', 'nav-exp': 'الخبرة والخطابة', 'nav-art': 'المكتبة والمقالات', 'nav-cnt': 'التواصل',
+                'hero-title': 'الشيخ محمد فخري محمد عبد الرحمن',
+                'hero-desc': 'طالب بكلية الدراسات الإسلامية والعربية بجامعة الأزهر الشريف، ومعلم قرآن كريم وأحكام تجويد أونلاين بـ (أكاديمية مكنون - الرياض)، وخطيب متطوع بوزارة الأوقاف المصرية، ومشارك ببرنامج Darmasiswa للتبادل الثقافي بإندونيسيا.',
+                'btn-wa': 'حجز حصة / تواصل', 'btn-email': 'البريد الإلكتروني',
+                'title-edu': 'المسار الأكاديمي والشهادات', 'sub-edu': 'الخلفية المعتمدة في علوم الشريعة واللغات والمهارات الفنية',
+                'edu-azhar-t': 'جامعة الأزهر الشريف', 'edu-azhar-o': 'كلية الدراسات الإسلامية والعربية', 'edu-azhar-d': 'دراسة أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.',
+                'edu-ikmi-t': 'STMIK IKMI Cirebon', 'edu-ikmi-d': 'المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمدينة سيريبون.',
+                'edu-elec-t': 'دبلوم التركيبات والمعدات الكهربائية', 'edu-elec-o': 'التعليم الفني الصناعي', 'edu-elec-d': 'خلفية عملية وتطبيقية في تأسيس الشبكات والتوصيلات الكهربائية وقراءة المخططات.',
+                'title-art': 'المكتبة والمقالات المدعومة بالوسائط', 'sub-art': 'مقالات مدعمة بالصور ومواقع الفعاليات والخطب'
+            },
+            en: {
+                'nav-edu': 'Education', 'nav-exp': 'Experience', 'nav-art': 'Library', 'nav-cnt': 'Contact',
+                'hero-title': 'MOHAMED FAKHRY MOHAMED MOHAMED ABDELRAHMAN',
+                'hero-desc': 'Student at Al-Azhar University, Online Quran Instructor at Maknoon Academy (Riyadh), Volunteer Khateeb at Awqaf Ministry, and International Darmasiswa Scholar in Indonesia.',
+                'btn-wa': 'Book Session / WhatsApp', 'btn-email': 'Direct Email',
+                'title-edu': 'Academic Path & Qualifications', 'sub-edu': 'Certified background in Islamic studies, languages, and technical skills',
+                'edu-azhar-t': 'Al-Azhar University', 'edu-azhar-o': 'Faculty of Islamic & Arabic Studies', 'edu-azhar-d': 'Specialized study in Islamic theology, Arabic language, and rhetoric.',
+                'edu-ikmi-t': 'STMIK IKMI Cirebon', 'edu-ikmi-d': 'Participation in the international Darmasiswa cultural exchange program in Cirebon.',
+                'edu-elec-t': 'Technical Electrical Diploma', 'edu-elec-o': 'Industrial Electrical Engineering', 'edu-elec-d': 'Practical background in electrical wiring and engineering schematics.',
+                'title-art': 'Media-Rich Library & Articles', 'sub-art': 'Articles enhanced with photos and event locations'
+            },
+            id: {
+                'nav-edu': 'Pendidikan', 'nav-exp': 'Pengalaman', 'nav-art': 'Perpustakaan', 'nav-cnt': 'Kontak',
+                'hero-title': 'MOHAMED FAKHRY MOHAMED MOHAMED ABDELRAHMAN',
+                'hero-desc': 'Mahasiswa Universitas Al-Azhar, Pengajar Al-Quran Online di Maknoon Academy (Riyadh), Khateeb di Kementerian Awqaf Mesir, dan Penerima Beasiswa Darmasiswa di Indonesia.',
+                'btn-wa': 'Daftar Kelas / WhatsApp', 'btn-email': 'Kirim Email',
+                'title-edu': 'Jalur Akademik & Kualifikasi', 'sub-edu': 'Latar belakang bersertifikat dalam Studi Islam, Bahasa, dan Keahlian Teknis',
+                'edu-azhar-t': 'Universitas Al-Azhar', 'edu-azhar-o': 'Fakultas Studi Islam & Arab', 'edu-azhar-d': 'Studi mendalam tentang teologi Islam dan bahasa Arab.',
+                'edu-ikmi-t': 'STMIK IKMI Cirebon', 'edu-ikmi-d': 'Partisipasi dalam program pertukaran budaya internasional Darmasiswa di Cirebon.',
+                'edu-elec-t': 'Diploma Teknik Listrik', 'edu-elec-o': 'Teknik Instalasi Listrik', 'edu-elec-d': 'Latar belakang praktis dalam instalasi listrik dan skema teknik.',
+                'title-art': 'Perpustakaan & Artikel Media', 'sub-art': 'Artikel yang dilengkapi dengan foto dan lokasi acara'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (dict[lang] && dict[lang][key]) {
+                    el.textContent = dict[lang][key];
+                }
+            });
+        }
+
+        function openAdminModal() { document.getElementById('adminModal').style.display = 'flex'; }
+        function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
+
+        function handleAdminAuth(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === '123456') {
+                document.getElementById('adminControls').style.display = 'block';
+                alert('تم دخول لوحة التحكم بنجاح!');
+            } else {
+                alert('كلمة المرور غير صحيحة');
+            }
+        }
+
+        function addNewArticle() {
+            const title = document.getElementById('artTitle').value;
+            const img = document.getElementById('artImg').value || 'https://images.unsplash.com/photo-1542816417-0983cbe82752?auto=format&fit=crop&w=600&q=80';
+            const loc = document.getElementById('artLoc').value;
+            const desc = document.getElementById('artDesc').value;
+
+            if (title && desc) {
+                const grid = document.getElementById('articlesGrid');
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${img}" class="article-img">
+                    <div>
+                        <h3>${title}</h3>
+                        <p>${desc}</p>
+                        ${loc ? `<a href="#" class="location-badge"><i class="fa-solid fa-location-dot"></i> ${loc}</a>` : ''}
+                    </div>
+                `;
+                grid.prepend(card);
+                alert('تم نشر المقال بنجاح!');
+                closeAdminModal();
+            }
+        }
+
+        // Theme Toggle
+        document.getElementById('themeBtn').onclick = () => {
             const isLight = document.body.getAttribute('data-theme') === 'light';
             if (isLight) {
                 document.body.removeAttribute('data-theme');
-                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                document.getElementById('themeBtn').innerHTML = '<i class="fa-solid fa-moon"></i>';
             } else {
                 document.body.setAttribute('data-theme', 'light');
-                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                document.getElementById('themeBtn').innerHTML = '<i class="fa-solid fa-sun"></i>';
             }
-        });
+        };
     </script>
 </body>
 </html>
