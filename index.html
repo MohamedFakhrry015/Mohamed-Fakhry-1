@@ -7,7 +7,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #06141b;
@@ -68,13 +68,24 @@
         .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.8rem; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
         .card:hover { border-color: var(--accent-gold); transform: translateY(-3px); background: var(--bg-card-hover); }
         
+        .card-icon { font-size: 2rem; color: var(--accent-gold); margin-bottom: 1rem; }
+        .card-link { color: var(--accent-gold); text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem; }
+        .card-link:hover { text-decoration: underline; }
+
+        .tag-group { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tag { font-size: 0.78rem; padding: 0.25rem 0.6rem; border-radius: 4px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--text-secondary); font-weight: 600; }
+
         .article-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
         .location-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--accent-teal); margin-top: 0.5rem; font-weight: 600; text-decoration: none; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
-        .modal-content { width: 100%; max-width: 500px; border-radius: 16px; padding: 2rem; position: relative; }
+        /* Full Admin Portal Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.88); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-content { width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; border-radius: 16px; padding: 2rem; position: relative; }
         .close-modal { position: absolute; top: 1rem; left: 1.2rem; font-size: 1.4rem; cursor: pointer; color: var(--text-secondary); }
+
+        .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; flex-wrap: wrap; }
+        .admin-tab-btn { background: transparent; border: none; color: var(--text-secondary); padding: 0.4rem 0.8rem; font-weight: 700; cursor: pointer; border-radius: 6px; font-size: 0.85rem; }
+        .admin-tab-btn.active { background: var(--accent-gold); color: #fff; }
 
         .form-group { margin-bottom: 1rem; text-align: right; }
         [dir="ltr"] .form-group { text-align: left; }
@@ -87,11 +98,13 @@
 </head>
 <body>
 
+    <!-- Navigation -->
     <nav class="glass">
         <a href="#" class="logo"><i class="fa-solid fa-book-open"></i> MOHAMED FAKHRY</a>
         <ul class="nav-links">
             <li><a href="#edu" data-key="nav-edu">الشهادات والدراسة</a></li>
             <li><a href="#exp" data-key="nav-exp">الخبرة والخطابة</a></li>
+            <li><a href="#pas" data-key="nav-pas">الشغف والعلوم</a></li>
             <li><a href="#articles" data-key="nav-art">المكتبة والمقالات</a></li>
             <li><a href="#cnt" data-key="nav-cnt">التواصل</a></li>
         </ul>
@@ -99,62 +112,168 @@
             <button class="btn-ctrl" onclick="setLanguage('ar')">AR</button>
             <button class="btn-ctrl" onclick="setLanguage('en')">EN</button>
             <button class="btn-ctrl" onclick="setLanguage('id')">ID</button>
-            <button class="btn-ctrl" id="adminLoginBtn" onclick="openAdminModal()"><i class="fa-solid fa-user-lock"></i></button>
+            <button class="btn-ctrl" onclick="openAdminModal()"><i class="fa-solid fa-user-lock"></i> الأدمن</button>
             <button class="btn-ctrl" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
         </div>
     </nav>
 
+    <!-- Header / Hero -->
     <header>
-        <div class="quran-ayah">﴿ يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ ﴾</div>
-        <h1 data-key="hero-title">الشيخ محمد فخري محمد عبد الرحمن</h1>
-        <p class="hero-desc" data-key="hero-desc">
+        <div class="quran-ayah" id="displayAyah">﴿ يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ ﴾</div>
+        <h1 id="displayTitle">الشيخ محمد فخري محمد عبد الرحمن</h1>
+        <p class="hero-desc" id="displayDesc" data-key="hero-desc">
             طالب بكلية الدراسات الإسلامية والعربية بجامعة الأزهر الشريف، ومعلم قرآن كريم وأحكام تجويد أونلاين بـ (أكاديمية مكنون - الرياض)، وخطيب متطوع بوزارة الأوقاف المصرية، ومشارك ببرنامج Darmasiswa للتبادل الثقافي بإندونيسيا.
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/201554859287" target="_blank" class="btn btn-gold" data-key="btn-wa"><i class="fa-brands fa-whatsapp"></i> حجز حصة / تواصل</a>
+            <a href="https://wa.me/201554859287" target="_blank" class="btn btn-gold" data-key="btn-wa"><i class="fa-brands fa-whatsapp"></i> طلب دراسة / حجز حصة قرآن</a>
             <a href="mailto:mohamedfakhry0155@gmail.com" class="btn btn-outline" data-key="btn-email"><i class="fa-solid fa-envelope"></i> البريد الإلكتروني</a>
         </div>
     </header>
 
+    <!-- Section: Academic Education -->
     <section id="edu">
-        <h2 class="sec-title" data-key="title-edu">المسار الأكاديمي والشهادات</h2>
-        <p class="sec-sub" data-key="sub-edu">الخلفية المعتمدة في علوم الشريعة واللغات والمهارات الفنية</p>
+        <h2 class="sec-title" data-key="title-edu">المسار الأكاديمي والشهادات المعتمدة</h2>
+        <p class="sec-sub" data-key="sub-edu">التأصيل الشرعي والأكاديمي والشهادات والبرامج الثقافية المعتمدة</p>
         <div class="grid-cards">
+            <!-- Al-Azhar -->
             <div class="card">
                 <div>
-                    <h3 data-key="edu-azhar-t">جامعة الأزهر الشريف</h3>
+                    <i class="fa-solid fa-mosque card-icon"></i>
+                    <h3 id="eduAzharTitle" data-key="edu-azhar-t">جامعة الأزهر الشريف</h3>
                     <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-azhar-o">كلية الدراسات الإسلامية والعربية</span>
-                    <p style="margin-top:0.8rem;" data-key="edu-azhar-d">دراسة أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.</p>
+                    <p style="margin-top:0.8rem;" id="eduAzharDesc" data-key="edu-azhar-d">دراسة تعمقية في أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.</p>
+                </div>
+                <div class="tag-group">
+                    <span class="tag">دراسات إسلامية</span>
+                    <span class="tag">لغة عربية</span>
                 </div>
             </div>
+
+            <!-- Quran Teacher Diploma -->
             <div class="card">
                 <div>
-                    <h3 data-key="edu-ikmi-t">STMIK IKMI Cirebon</h3>
-                    <span style="color: var(--accent-teal); font-size: 0.85rem;">Program Darmasiswa (Indonesia)</span>
-                    <p style="margin-top:0.8rem;" data-key="edu-ikmi-d">المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمدينة سيريبون.</p>
+                    <i class="fa-solid fa-quran card-icon"></i>
+                    <h3 id="eduQuranTitle" data-key="edu-quran-t">دبلوم تأهيل معلم القرآن الكريم</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-quran-o">اعتماد أصول التدريس والتجويد</span>
+                    <p style="margin-top:0.8rem;" id="eduQuranDesc" data-key="edu-quran-d">دبلوم متخصص يركز على أساليب وتأهيل معلمي القرآن الكريم، ودراسة أحكام التلاوة والتجويد والضبط العلمي.</p>
+                </div>
+                <div class="tag-group">
+                    <span class="tag">تأهيل معلمين</span>
+                    <span class="tag">تجويد القرآن</span>
                 </div>
             </div>
+
+            <!-- STMIK IKMI Indonesia -->
             <div class="card">
                 <div>
-                    <h3 data-key="edu-elec-t">دبلوم التركيبات والمعدات الكهربائية</h3>
-                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-elec-o">التعليم الفني الصناعي</span>
-                    <p style="margin-top:0.8rem;" data-key="edu-elec-d">خلفية عملية وتطبيقية في تأسيس الشبكات والتوصيلات الكهربائية وقراءة المخططات.</p>
+                    <i class="fa-solid fa-globe card-icon"></i>
+                    <h3 id="eduIkmiTitle" data-key="edu-ikmi-t">STMIK IKMI Cirebon (إندونيسيا)</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-ikmi-o">برنامج Darmasiswa الدولي</span>
+                    <p style="margin-top:0.8rem;" id="eduIkmiDesc" data-key="edu-ikmi-d">المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمعهد IKMI بمدينة سيريبون، إندونيسيا.</p>
+                </div>
+                <a href="https://ikmi.ac.id/stmik-ikmi-cirebon-kembali-dipercaya-kemdiktisaintek-selenggarakan-program-darmasiswa-internasional/" target="_blank" class="card-link" data-key="link-ikmi">
+                    رابط الاعتماد الرسمي للمعهد <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+
+            <!-- Puskin Cairo -->
+            <div class="card">
+                <div>
+                    <i class="fa-solid fa-language card-icon"></i>
+                    <h3 id="eduPuskinTitle" data-key="edu-puskin-t">المركز الثقافي الإندونيسي (بوسكين)</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-puskin-o">Pusat Kebudayaan Indonesia بالقاهرة</span>
+                    <p style="margin-top:0.8rem;" id="eduPuskinDesc" data-key="edu-puskin-d">دراسة اللغة الإندونيسية (Bahasa Indonesia) والتعمق في ثقافة جنوب شرق آسيا والتبادل الثقافي الدولي.</p>
+                </div>
+                <div class="tag-group">
+                    <span class="tag">Bahasa Indonesia</span>
+                    <span class="tag">دبلوماسية ثقافية</span>
+                </div>
+            </div>
+
+            <!-- Primary Pedagogy -->
+            <div class="card">
+                <div>
+                    <i class="fa-solid fa-graduation-cap card-icon"></i>
+                    <h3 id="eduPedagogyTitle" data-key="edu-pedagogy-t">التأسيس التربوي والتعليم الابتدائي</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="edu-pedagogy-o">تخطيط وتدريس المناهج</span>
+                    <p style="margin-top:0.8rem;" id="eduPedagogyDesc" data-key="edu-pedagogy-d">خبرة متخصصة في وضع وتنسيق الجداول الدراسية وتدريس المناهج الأساسية لطلاب المرحلة الابتدائية بأسلوب تربوي ميسر.</p>
+                </div>
+                <div class="tag-group">
+                    <span class="tag">تأسيس ابتدائي</span>
+                    <span class="tag">تنسيق جداول</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Section: Experience -->
+    <section id="exp">
+        <h2 class="sec-title" data-key="title-exp">الخبرة العملية والإلقاء الخطابي</h2>
+        <p class="sec-sub" data-key="sub-exp">الخطابة الميدانية والتعليم القرآني أونلاين عبر الأكاديميات الدولية</p>
+        <div class="grid-cards">
+            <!-- Awqaf Ministry -->
+            <div class="card">
+                <div>
+                    <i class="fa-solid fa-microphone-lines card-icon"></i>
+                    <h3 id="expAwqafTitle" data-key="exp-awqaf-t">خطيب متطوع | وزارة الأوقاف المصرية</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="exp-awqaf-o">إلقاء الخطب والدروس الدينية</span>
+                    <p style="margin-top:0.8rem;" id="expAwqafDesc" data-key="exp-awqaf-d">إلقاء خطب الجمعة وإعداد الدروس الإيمانية والتربوية بمساجد الأوقاف بأسلوب أصيل يجمع بين الفصاحة والتأثير البناء.</p>
+                </div>
+                <a href="https://www.instagram.com/p/Ddp8TduCS_h/" target="_blank" class="card-link" data-key="link-sermon">
+                    مشاهدة نموذج الخطبة على إنستغرام <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+
+            <!-- Maknoon Academy -->
+            <div class="card">
+                <div>
+                    <i class="fa-solid fa-laptop-code card-icon"></i>
+                    <h3 id="expMaknoonTitle" data-key="exp-maknoon-t">معلم قرآن كريم أونلاين | أكاديمية مكنون</h3>
+                    <span style="color: var(--accent-teal); font-size: 0.85rem;" data-key="exp-maknoon-o">الرياض - المملكة العربية السعودية</span>
+                    <p style="margin-top:0.8rem;" id="expMaknoonDesc" data-key="exp-maknoon-d">تدريس التلاوة والتجويد والحفظ الافتراضي لطلاب الأكاديمية بالمملكة العربية السعودية وبقية دول الخليج.</p>
+                </div>
+                <div class="tag-group">
+                    <span class="tag">تعليم عن بُعد</span>
+                    <span class="tag">أكاديمية مكنون</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Passions & Research -->
+    <section id="pas">
+        <h2 class="sec-title" data-key="title-pas">الشغف والعلوم المقربة</h2>
+        <p class="sec-sub" data-key="sub-pas">الروافد الثقافية والفكرية التي تثري الشخصية والخطاب التربوي</p>
+        <div class="grid-cards">
+            <div class="card">
+                <i class="fa-solid fa-book-quran card-icon"></i>
+                <h3 data-key="pas-1-t">الأدب العربي والمعاجم</h3>
+                <p data-key="pas-1-d">التعمق في قراءة واستيعاب التراث الأدبي والمعجمي العربي، ودراسات البلاغة والبيان.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-brain card-icon"></i>
+                <h3 data-key="pas-2-t">العلوم النفسية والفلسفية</h3>
+                <p data-key="pas-2-d">متابعة الدراسات النفسية والإنسانية لتطوير أدوات الفهم التربوي والتعامل السليم مع مختلف المراحل العمرية.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-earth-americas card-icon"></i>
+                <h3 data-key="pas-3-t">اللغات والتواصل الحضاري</h3>
+                <p data-key="pas-3-d">اهتمام واسع باللغات الآسيوية وحوار الحضارات ونشر الثقافة الإسلامية والعربية إقليمياً ودولياً.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Media-Rich Articles -->
     <section id="articles">
         <h2 class="sec-title" data-key="title-art">المكتبة والمقالات المدعومة بالوسائط</h2>
         <p class="sec-sub" data-key="sub-art">مقالات مدعمة بالصور ومواقع الفعاليات والخطب</p>
         
         <div class="grid-cards" id="articlesGrid">
-            <!-- Example Article with Image & Location -->
             <div class="card">
                 <img src="https://images.unsplash.com/photo-1542816417-0983cbe82752?auto=format&fit=crop&w=600&q=80" alt="Sermon" class="article-img">
                 <div>
                     <h3>خطبة الجمعة من مسجد الأوقاف</h3>
-                    <p>تفاصيل الخطبة والدروس التربوية القيمة التي أُلقيت في الجمعة الماضية.</p>
+                    <p>تفاصيل الخطبة والدروس التربوية القيمة التي أُلقيت في الجمعة الماضية بأسلوب ميسر.</p>
                     <a href="https://maps.google.com" target="_blank" class="location-badge">
                         <i class="fa-solid fa-location-dot"></i> موقع المسجد: الجيزة، مصر
                     </a>
@@ -174,34 +293,116 @@
         </div>
     </section>
 
-    <!-- Admin Modal -->
+    <!-- Contact Section -->
+    <section id="cnt">
+        <div class="card glass" style="text-align: center; padding: 3rem 1.5rem;">
+            <h2 style="font-size: 2rem; margin-bottom: 0.8rem;" data-key="cnt-title">التواصل والحجز المباشر</h2>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem;" data-key="cnt-desc">
+                أهلاً بكم للتواصل والتنسيق لحصص تحفيظ القرآن الكريم، المتابعة التعليمية، أو الاستشارات الأكاديمية.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://wa.me/201554859287" target="_blank" class="btn btn-gold">
+                    <i class="fa-brands fa-whatsapp"></i> +201554859287
+                </a>
+                <a href="mailto:mohamedfakhry0155@gmail.com" class="btn btn-outline">
+                    <i class="fa-solid fa-envelope"></i> mohamedfakhry0155@gmail.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive Admin Portal Modal -->
     <div class="modal" id="adminModal">
         <div class="modal-content glass">
             <span class="close-modal" onclick="closeAdminModal()">&times;</span>
-            <h3 style="margin-bottom: 1rem; color: var(--accent-gold);">تسجيل دخول الأدمن</h3>
-            <form onsubmit="handleAdminAuth(event)">
+            <h3 style="margin-bottom: 1rem; color: var(--accent-gold);"><i class="fa-solid fa-sliders"></i> لوحة تحكم الأدمن الشاملة</h3>
+            
+            <!-- Auth Form -->
+            <form onsubmit="handleAdminAuth(event)" id="adminAuthForm">
                 <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" class="form-control" id="adminPassword" required placeholder="أدخل كلمة المرور">
+                    <label>كلمة السر</label>
+                    <input type="password" class="form-control" id="adminPassword" required placeholder="أدخل كلمة السر (123456)">
                 </div>
-                <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;">دخول لوحة التحكم</button>
+                <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;">دخول اللوحة</button>
             </form>
-            <div id="adminControls" style="display:none; margin-top: 1.5rem;">
-                <hr style="border-color: var(--border-color); margin-bottom: 1rem;">
-                <h4 style="color: var(--accent-teal); margin-bottom: 0.8rem;">إضافة مقال جديد (مع صورة ولوكيشن)</h4>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="artTitle" placeholder="عنوان المقال">
+
+            <!-- Admin Full Controls -->
+            <div id="adminFullPanel" style="display:none;">
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" onclick="switchAdminTab('tab-hero')">البيانات العامة</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-edu')">الدراسة والشهادات</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-exp')">الخبرات</button>
+                    <button class="admin-tab-btn" onclick="switchAdminTab('tab-art')">إضافة مقال</button>
                 </div>
-                <div class="form-group">
-                    <input type="url" class="form-control" id="artImg" placeholder="رابط الصورة (Image URL)">
+
+                <!-- Tab 1: Hero Data -->
+                <div id="tab-hero" class="admin-tab-content">
+                    <div class="form-group">
+                        <label>الاسم الرئيسي</label>
+                        <input type="text" class="form-control" id="editTitle" value="الشيخ محمد فخري محمد عبد الرحمن">
+                    </div>
+                    <div class="form-group">
+                        <label>الآية القرآنيّة</label>
+                        <input type="text" class="form-control" id="editAyah" value="﴿ يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ ﴾">
+                    </div>
+                    <div class="form-group">
+                        <label>الوصف التعريفى الشامل</label>
+                        <textarea class="form-control" id="editDesc" rows="3">طالب بكلية الدراسات الإسلامية والعربية بجامعة الأزهر الشريف، ومعلم قرآن كريم وأحكام تجويد أونلاين بـ (أكاديمية مكنون - الرياض)، وخطيب متطوع بوزارة الأوقاف المصرية، ومشارك ببرنامج Darmasiswa للتبادل الثقافي بإندونيسيا.</textarea>
+                    </div>
+                    <button type="button" class="btn btn-gold" onclick="saveHeroData()" style="width:100%; justify-content:center;">حفظ البيانات العامة</button>
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="artLoc" placeholder="اسم الموقع / رابط اللوكيشن">
+
+                <!-- Tab 2: Education -->
+                <div id="tab-edu" class="admin-tab-content" style="display:none;">
+                    <div class="form-group">
+                        <label>عنوان شهادة الأزهر</label>
+                        <input type="text" class="form-control" id="editAzharTitle" value="جامعة الأزهر الشريف">
+                    </div>
+                    <div class="form-group">
+                        <label>وصف دراسة الأزهر</label>
+                        <textarea class="form-control" id="editAzharDesc" rows="2">دراسة أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>وصف دراسة معهد إندونيسيا (IKMI)</label>
+                        <textarea class="form-control" id="editIkmiDesc" rows="2">المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمدينة سيريبون.</textarea>
+                    </div>
+                    <button type="button" class="btn btn-gold" onclick="saveEduData()" style="width:100%; justify-content:center;">حفظ البيانات الأكاديمية</button>
                 </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="artDesc" rows="3" placeholder="محتوى/ملخص المقال"></textarea>
+
+                <!-- Tab 3: Experience -->
+                <div id="tab-exp" class="admin-tab-content" style="display:none;">
+                    <div class="form-group">
+                        <label>تفاصيل خبرة وزارة الأوقاف</label>
+                        <textarea class="form-control" id="editAwqafDesc" rows="2">إلقاء خطب الجمعة والدروس الإيمانية بالمساجد بأسلوب أصيل وتأثير بناء.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>تفاصيل خبرة أكاديمية مكنون</label>
+                        <textarea class="form-control" id="editMaknoonDesc" rows="2">تدريس التلاوة والتجويد والحفظ للطلاب بالمملكة العربية السعودية والخليج.</textarea>
+                    </div>
+                    <button type="button" class="btn btn-gold" onclick="saveExpData()" style="width:100%; justify-content:center;">حفظ الخبرات</button>
                 </div>
-                <button type="button" class="btn btn-gold" onclick="addNewArticle()" style="width:100%; justify-content:center;">نشر المقال فوراً</button>
+
+                <!-- Tab 4: Add Article -->
+                <div id="tab-art" class="admin-tab-content" style="display:none;">
+                    <div class="form-group">
+                        <label>عنوان المقال</label>
+                        <input type="text" class="form-control" id="artTitle" placeholder="مثلاً: أهمية الصدق في الخطاب الدعوي">
+                    </div>
+                    <div class="form-group">
+                        <label>رابط الصورة البارزة (Image URL)</label>
+                        <input type="url" class="form-control" id="artImg" placeholder="https://images.unsplash.com/photo-...">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم المكان / اللوكيشن</label>
+                        <input type="text" class="form-control" id="artLoc" placeholder="مثلاً: القاهرة، مصر">
+                    </div>
+                    <div class="form-group">
+                        <label>محتوى المقال</label>
+                        <textarea class="form-control" id="artDesc" rows="3" placeholder="ملخص الموضوع..."></textarea>
+                    </div>
+                    <button type="button" class="btn btn-gold" onclick="addNewArticle()" style="width:100%; justify-content:center;">نشر المقال فوراً</button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -210,40 +411,68 @@
         <p>&copy; MOHAMED FAKHRY MOHAMED MOHAMED ABDELRAHMAN. جميع الحقوق محفوظة.</p>
     </footer>
 
+    <!-- Translations & Script -->
     <script>
         const dict = {
             ar: {
-                'nav-edu': 'الشهادات والدراسة', 'nav-exp': 'الخبرة والخطابة', 'nav-art': 'المكتبة والمقالات', 'nav-cnt': 'التواصل',
-                'hero-title': 'الشيخ محمد فخري محمد عبد الرحمن',
+                'nav-edu': 'الشهادات والدراسة', 'nav-exp': 'الخبرة والخطابة', 'nav-pas': 'الشغف والعلوم', 'nav-art': 'المكتبة والمقالات', 'nav-cnt': 'التواصل',
                 'hero-desc': 'طالب بكلية الدراسات الإسلامية والعربية بجامعة الأزهر الشريف، ومعلم قرآن كريم وأحكام تجويد أونلاين بـ (أكاديمية مكنون - الرياض)، وخطيب متطوع بوزارة الأوقاف المصرية، ومشارك ببرنامج Darmasiswa للتبادل الثقافي بإندونيسيا.',
-                'btn-wa': 'حجز حصة / تواصل', 'btn-email': 'البريد الإلكتروني',
-                'title-edu': 'المسار الأكاديمي والشهادات', 'sub-edu': 'الخلفية المعتمدة في علوم الشريعة واللغات والمهارات الفنية',
-                'edu-azhar-t': 'جامعة الأزهر الشريف', 'edu-azhar-o': 'كلية الدراسات الإسلامية والعربية', 'edu-azhar-d': 'دراسة أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.',
-                'edu-ikmi-t': 'STMIK IKMI Cirebon', 'edu-ikmi-d': 'المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمدينة سيريبون.',
-                'edu-elec-t': 'دبلوم التركيبات والمعدات الكهربائية', 'edu-elec-o': 'التعليم الفني الصناعي', 'edu-elec-d': 'خلفية عملية وتطبيقية في تأسيس الشبكات والتوصيلات الكهربائية وقراءة المخططات.',
-                'title-art': 'المكتبة والمقالات المدعومة بالوسائط', 'sub-art': 'مقالات مدعمة بالصور ومواقع الفعاليات والخطب'
+                'btn-wa': 'طلب دراسة / حجز حصة قرآن', 'btn-email': 'البريد الإلكتروني',
+                'title-edu': 'المسار الأكاديمي والشهادات المعتمدة', 'sub-edu': 'التأصيل الشرعي والأكاديمي والشهادات والبرامج الثقافية المعتمدة',
+                'edu-azhar-t': 'جامعة الأزهر الشريف', 'edu-azhar-o': 'كلية الدراسات الإسلامية والعربية', 'edu-azhar-d': 'دراسة تعمقية في أصول الدين واللغة العربية والبلاغة بأسلوب أزهري أصيل.',
+                'edu-quran-t': 'دبلوم تأهيل معلم القرآن الكريم', 'edu-quran-o': 'اعتماد أصول التدريس والتجويد', 'edu-quran-d': 'دبلوم متخصص يركز على أساليب وتأهيل معلمي القرآن الكريم، ودراسة أحكام التلاوة والتجويد والضبط العلمي.',
+                'edu-ikmi-t': 'STMIK IKMI Cirebon (إندونيسيا)', 'edu-ikmi-o': 'برنامج Darmasiswa الدولي', 'edu-ikmi-d': 'المشاركة في البرنامج الدولي المعتمد للتبادل الثقافي والدراسي بمعهد IKMI بمدينة سيريبون، إندونيسيا.', 'link-ikmi': 'رابط الاعتماد الرسمي للمعهد',
+                'edu-puskin-t': 'المركز الثقافي الإندونيسي (بوسكين)', 'edu-puskin-o': 'Pusat Kebudayaan Indonesia بالقاهرة', 'edu-puskin-d': 'دراسة اللغة الإندونيسية (Bahasa Indonesia) والتعمق في ثقافة جنوب شرق آسيا والتبادل الثقافي الدولي.',
+                'edu-pedagogy-t': 'التأسيس التربوي والتعليم الابتدائي', 'edu-pedagogy-o': 'تخطيط وتدريس المناهج', 'edu-pedagogy-d': 'خبرة متخصصة في وضع وتنسيق الجداول الدراسية وتدريس المناهج الأساسية لطلاب المرحلة الابتدائية بأسلوب تربوي ميسر.',
+                'title-exp': 'الخبرة العملية والإلقاء الخطابي', 'sub-exp': 'الخطابة الميدانية والتعليم القرآني أونلاين عبر الأكاديميات الدولية',
+                'exp-awqaf-t': 'خطيب متطوع | وزارة الأوقاف المصرية', 'exp-awqaf-o': 'إلقاء الخطب والدروس الدينية', 'exp-awqaf-d': 'إلقاء خطب الجمعة وإعداد الدروس الإيمانية والتربوية بمساجد الأوقاف بأسلوب أصيل يجمع بين الفصاحة والتأثير البناء.', 'link-sermon': 'مشاهدة نموذج الخطبة على إنستغرام',
+                'exp-maknoon-t': 'معلم قرآن كريم أونلاين | أكاديمية مكنون', 'exp-maknoon-o': 'الرياض - المملكة العربية السعودية', 'exp-maknoon-d': 'تدريس التلاوة والتجويد والحفظ الافتراضي لطلاب الأكاديمية بالمملكة العربية السعودية وبقية دول الخليج.',
+                'title-pas': 'الشغف والعلوم المقربة', 'sub-pas': 'الروافد الثقافية والفكرية التي تثري الشخصية والخطاب التربوي',
+                'pas-1-t': 'الأدب العربي والمعاجم', 'pas-1-d': 'التعمق في قراءة واستيعاب التراث الأدبي والمعجمي العربي، ودراسات البلاغة والبيان.',
+                'pas-2-t': 'العلوم النفسية والفلسفية', 'pas-2-d': 'متابعة الدراسات النفسية والإنسانية لتطوير أدوات الفهم التربوي والتعامل السليم مع مختلف المراحل العمرية.',
+                'pas-3-t': 'اللغات والتواصل الحضاري', 'pas-3-d': 'اهتمام واسع باللغات الآسيوية وحوار الحضارات ونشر الثقافة الإسلامية والعربية إقليمياً ودولياً.',
+                'title-art': 'المكتبة والمقالات المدعومة بالوسائط', 'sub-art': 'مقالات مدعمة بالصور ومواقع الفعاليات والخطب',
+                'cnt-title': 'التواصل والحجز المباشر', 'cnt-desc': 'أهلاً بكم للتواصل والتنسيق لحصص تحفيظ القرآن الكريم، المتابعة التعليمية، أو الاستشارات الأكاديمية.'
             },
             en: {
-                'nav-edu': 'Education', 'nav-exp': 'Experience', 'nav-art': 'Library', 'nav-cnt': 'Contact',
-                'hero-title': 'MOHAMED FAKHRY MOHAMED MOHAMED ABDELRAHMAN',
+                'nav-edu': 'Education', 'nav-exp': 'Experience', 'nav-pas': 'Passions', 'nav-art': 'Library', 'nav-cnt': 'Contact',
                 'hero-desc': 'Student at Al-Azhar University, Online Quran Instructor at Maknoon Academy (Riyadh), Volunteer Khateeb at Awqaf Ministry, and International Darmasiswa Scholar in Indonesia.',
-                'btn-wa': 'Book Session / WhatsApp', 'btn-email': 'Direct Email',
-                'title-edu': 'Academic Path & Qualifications', 'sub-edu': 'Certified background in Islamic studies, languages, and technical skills',
-                'edu-azhar-t': 'Al-Azhar University', 'edu-azhar-o': 'Faculty of Islamic & Arabic Studies', 'edu-azhar-d': 'Specialized study in Islamic theology, Arabic language, and rhetoric.',
-                'edu-ikmi-t': 'STMIK IKMI Cirebon', 'edu-ikmi-d': 'Participation in the international Darmasiswa cultural exchange program in Cirebon.',
-                'edu-elec-t': 'Technical Electrical Diploma', 'edu-elec-o': 'Industrial Electrical Engineering', 'edu-elec-d': 'Practical background in electrical wiring and engineering schematics.',
-                'title-art': 'Media-Rich Library & Articles', 'sub-art': 'Articles enhanced with photos and event locations'
+                'btn-wa': 'Book Quran Session', 'btn-email': 'Send Direct Email',
+                'title-edu': 'Academic Path & Qualifications', 'sub-edu': 'Certified background in Islamic studies, Quran pedagogy, and international diplomacy',
+                'edu-azhar-t': 'Al-Azhar University', 'edu-azhar-o': 'Faculty of Islamic & Arabic Studies', 'edu-azhar-d': 'Deep specialization in Islamic theology, Arabic rhetoric, and jurisprudence.',
+                'edu-quran-t': 'Quran Teacher Qualification Diploma', 'edu-quran-o': 'Certified Pedagogy & Tajweed', 'edu-quran-d': 'Specialized diploma in Quranic instruction methodologies, recitation rules, and Tajweed.',
+                'edu-ikmi-t': 'STMIK IKMI Cirebon (Indonesia)', 'edu-ikmi-o': 'International Darmasiswa Program', 'edu-ikmi-d': 'Participating in the international Darmasiswa cultural exchange program in Cirebon, Indonesia.', 'link-ikmi': 'Official Institution News Link',
+                'edu-puskin-t': 'Indonesian Cultural Center (Puskin)', 'edu-puskin-o': 'Pusat Kebudayaan Indonesia Cairo', 'edu-puskin-d': 'Formal study of Bahasa Indonesia language and Southeast Asian cultural diplomacy.',
+                'edu-pedagogy-t': 'Primary Educational Pedagogy', 'edu-pedagogy-o': 'Curriculum & Schedule Planning', 'edu-pedagogy-d': 'Specialized expertise in designing schedules and primary school curriculum delivery.',
+                'title-exp': 'Field Experience & Public Speaking', 'sub-exp': 'Mosque sermons and remote Quran tutoring via international academies',
+                'exp-awqaf-t': 'Volunteer Khateeb | Awqaf Ministry', 'exp-awqaf-o': 'Friday Sermons & Religious Lectures', 'exp-awqaf-d': 'Delivering Friday sermons and community lectures with eloquence and moral guidance.', 'link-sermon': 'Watch Sermon Sample on Instagram',
+                'exp-maknoon-t': 'Online Quran Instructor | Maknoon Academy', 'exp-maknoon-o': 'Riyadh, Saudi Arabia', 'exp-maknoon-d': 'Teaching Quran recitation and Tajweed rules virtually via Maknoon Academy.',
+                'title-pas': 'Academic Interests & Passions', 'sub-pas': 'Intellectual pursuits that enrich educational delivery',
+                'pas-1-t': 'Arabic Literature & Dictionaries', 'pas-1-d': 'In-depth study of Arabic literary heritage, rhetoric, and classical lexicons.',
+                'pas-2-t': 'Psychology & Philosophy', 'pas-2-d': 'Following human psychology studies to refine pedagogical and mentoring methods.',
+                'pas-3-t': 'Languages & Intercultural Exchange', 'pas-3-d': 'Promoting Arabic and Islamic culture through international cross-cultural dialogue.',
+                'title-art': 'Media-Rich Library & Articles', 'sub-art': 'Articles enhanced with photos and event locations',
+                'cnt-title': 'Get in Touch Directly', 'cnt-desc': 'Open for academic inquiries, Quran tutoring, or educational consultations.'
             },
             id: {
-                'nav-edu': 'Pendidikan', 'nav-exp': 'Pengalaman', 'nav-art': 'Perpustakaan', 'nav-cnt': 'Kontak',
-                'hero-title': 'MOHAMED FAKHRY MOHAMED MOHAMED ABDELRAHMAN',
+                'nav-edu': 'Pendidikan', 'nav-exp': 'Pengalaman', 'nav-pas': 'Minat', 'nav-art': 'Perpustakaan', 'nav-cnt': 'Kontak',
                 'hero-desc': 'Mahasiswa Universitas Al-Azhar, Pengajar Al-Quran Online di Maknoon Academy (Riyadh), Khateeb di Kementerian Awqaf Mesir, dan Penerima Beasiswa Darmasiswa di Indonesia.',
-                'btn-wa': 'Daftar Kelas / WhatsApp', 'btn-email': 'Kirim Email',
-                'title-edu': 'Jalur Akademik & Kualifikasi', 'sub-edu': 'Latar belakang bersertifikat dalam Studi Islam, Bahasa, dan Keahlian Teknis',
-                'edu-azhar-t': 'Universitas Al-Azhar', 'edu-azhar-o': 'Fakultas Studi Islam & Arab', 'edu-azhar-d': 'Studi mendalam tentang teologi Islam dan bahasa Arab.',
-                'edu-ikmi-t': 'STMIK IKMI Cirebon', 'edu-ikmi-d': 'Partisipasi dalam program pertukaran budaya internasional Darmasiswa di Cirebon.',
-                'edu-elec-t': 'Diploma Teknik Listrik', 'edu-elec-o': 'Teknik Instalasi Listrik', 'edu-elec-d': 'Latar belakang praktis dalam instalasi listrik dan skema teknik.',
-                'title-art': 'Perpustakaan & Artikel Media', 'sub-art': 'Artikel yang dilengkapi dengan foto dan lokasi acara'
+                'btn-wa': 'Daftar Kelas Al-Quran', 'btn-email': 'Kirim Email',
+                'title-edu': 'Jalur Akademik & Kualifikasi', 'sub-edu': 'Latar belakang bersertifikat dalam Studi Islam, Pedagogi Al-Quran, dan Bahasa',
+                'edu-azhar-t': 'Universitas Al-Azhar', 'edu-azhar-o': 'Fakultas Studi Islam & Arab', 'edu-azhar-d': 'Studi mendalam tentang teologi Islam, retorika bahasa Arab, dan fikih.',
+                'edu-quran-t': 'Diploma Pengajar Al-Quran', 'edu-quran-o': 'Pedagogi & Tajwid Bersertifikat', 'edu-quran-d': 'Diploma khusus dalam metodologi pengajaran Al-Quran dan hukum Tajwid.',
+                'edu-ikmi-t': 'STMIK IKMI Cirebon (Indonesia)', 'edu-ikmi-o': 'Program Darmasiswa Internasional', 'edu-ikmi-d': 'Partisipasi dalam program pertukaran budaya internasional Darmasiswa di Cirebon.', 'link-ikmi': 'Tautan Berita Resmi Lembaga',
+                'edu-puskin-t': 'Pusat Kebudayaan Indonesia (Puskin)', 'edu-puskin-o': 'Pusat Kebudayaan Indonesia Kairo', 'edu-puskin-d': 'Studi formal Bahasa Indonesia dan diplomasi kebudayaan Asia Tenggara.',
+                'edu-pedagogy-t': 'Pedagogi Pendidikan Dasar', 'edu-pedagogy-o': 'Perencanaan Kurikulum & Jadwal', 'edu-pedagogy-d': 'Keahlian khusus dalam menyusun jadwal dan penyampaian kurikulum sekolah dasar.',
+                'title-exp': 'Pengalaman Lapangan & Khutbah', 'sub-exp': 'Khutbah masjid dan pengajaran Al-Quran jarak jauh',
+                'exp-awqaf-t': 'Khateeb Relawan | Kementerian Awqaf', 'exp-awqaf-o': 'Khutbah Jumat & Ceramah Agama', 'exp-awqaf-d': 'Menyampaikan khutbah Jumat dan ceramah keagamaan dengan kejelasan moral.', 'link-sermon': 'Lihat Sampel Khutbah di Instagram',
+                'exp-maknoon-t': 'Pengajar Al-Quran Online | Maknoon Academy', 'exp-maknoon-o': 'Riyadh, Arab Saudi', 'exp-maknoon-d': 'Mengajar bacaan Al-Quran dan Tajwid secara virtual melalui Maknoon Academy.',
+                'title-pas': 'Minat Akademik & Kajian', 'sub-pas': 'Kajian intelektual yang memperkaya penyampaian pendidikan',
+                'pas-1-t': 'Sastra Arab & Kamus', 'pas-1-d': 'Kajian mendalam tentang warisan sastra Arab dan retorika klasik.',
+                'pas-2-t': 'Psikologi & Filsafat', 'pas-2-d': 'Mengikuti studi psikologi manusia untuk menyempurnakan metode pengajaran.',
+                'pas-3-t': 'Bahasa & Pertukaran Budaya', 'pas-3-d': 'Mempromosikan budaya Arab dan Islam melalui dialog antarbudaya internasional.',
+                'title-art': 'Perpustakaan & Artikel Media', 'sub-art': 'Artikel yang dilengkapi dengan foto dan lokasi acara',
+                'cnt-title': 'Hubungi Langsung', 'cnt-desc': 'Terbuka untuk konsultasi akademik, bimbingan Al-Quran, atau diskusi pendidikan.'
             }
         };
 
@@ -258,6 +487,7 @@
             });
         }
 
+        // Auth Logic
         function openAdminModal() { document.getElementById('adminModal').style.display = 'flex'; }
         function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
 
@@ -265,11 +495,39 @@
             e.preventDefault();
             const pass = document.getElementById('adminPassword').value;
             if (pass === '123456') {
-                document.getElementById('adminControls').style.display = 'block';
-                alert('تم دخول لوحة التحكم بنجاح!');
+                document.getElementById('adminAuthForm').style.display = 'none';
+                document.getElementById('adminFullPanel').style.display = 'block';
             } else {
-                alert('كلمة المرور غير صحيحة');
+                alert('كلمة السر غير صحيحة!');
             }
+        }
+
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+        }
+
+        // Live Updating & Saving
+        function saveHeroData() {
+            document.getElementById('displayTitle').textContent = document.getElementById('editTitle').value;
+            document.getElementById('displayAyah').textContent = document.getElementById('editAyah').value;
+            document.getElementById('displayDesc').textContent = document.getElementById('editDesc').value;
+            alert('تم تعديل البيانات العامة بنجاح!');
+        }
+
+        function saveEduData() {
+            document.getElementById('eduAzharTitle').textContent = document.getElementById('editAzharTitle').value;
+            document.getElementById('eduAzharDesc').textContent = document.getElementById('editAzharDesc').value;
+            document.getElementById('eduIkmiDesc').textContent = document.getElementById('editIkmiDesc').value;
+            alert('تم تعديل البيانات الأكاديمية بنجاح!');
+        }
+
+        function saveExpData() {
+            document.getElementById('expAwqafDesc').textContent = document.getElementById('editAwqafDesc').value;
+            document.getElementById('expMaknoonDesc').textContent = document.getElementById('editMaknoonDesc').value;
+            alert('تم تعديل الخبرات بنجاح!');
         }
 
         function addNewArticle() {
